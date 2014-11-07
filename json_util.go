@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
-	"strings"
 )
 
 func DecodeJson(filename string) interface{} {
@@ -24,19 +22,8 @@ func DecodeJson(filename string) interface{} {
 	return jsonData
 }
 
-func EncodeJson(jsonData interface{}, filename string) []byte {
-	newJson := make(map[string]interface{})
-
-	for key, value := range jsonData.(map[string]interface{}) {
-		newJson[key] = value
-	}
-
-	if _, ok := newJson["name"]; !ok {
-		filenameWithoutExt := strings.Replace(filepath.Base(filename), filepath.Ext(filename), "", -1)
-		newJson["name"] = filenameWithoutExt
-	}
-
-	jsonByte, err := json.Marshal(newJson)
+func EncodeJson(jsonData interface{}) []byte {
+	jsonByte, err := json.Marshal(jsonData.(map[string]interface{}))
 
 	if err != nil {
 		fmt.Println(err)

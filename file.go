@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func GoWalk(location string) chan string {
@@ -30,6 +31,10 @@ func GoWalk(location string) chan string {
 
 func WriteJSON(filepath string, jsonData []byte) {
 	ioutil.WriteFile(filepath, jsonData, 0644)
+}
+
+func FileWithoutExt(filename string) string {
+	return strings.Replace(filepath.Base(filename), filepath.Ext(filename), "", -1)
 }
 
 func FileNotExists(name string) bool {
