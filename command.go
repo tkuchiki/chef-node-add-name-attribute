@@ -15,6 +15,7 @@ func Print(msg string) {
 
 func Flags() []cli.Flag {
 	return []cli.Flag{
+		cli.HelpFlag,
 		cli.BoolFlag{
 			Name:  "quiet, q",
 			Usage: "quiet mode",
@@ -49,4 +50,20 @@ func Command(c *cli.Context) {
 			Print(fpath + ": Added name attribute")
 		}
 	}
+}
+
+func HelpTemplate() string {
+	return `NAME:
+   {{.Name}} - {{.Usage}}
+
+USAGE:
+   {{.Name}} [options] [arguments...]
+
+VERSION:
+   {{.Version}}
+
+OPTIONS:
+   {{range .Flags}}{{.}}
+   {{end}}
+`
 }
